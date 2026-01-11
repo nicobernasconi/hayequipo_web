@@ -89,7 +89,12 @@ function handleEventosRequest($method, $data_input, $path_params, $query_params)
                 // PUT /eventos/{id}/dividir-gastos
                 if (isset($path_params[1]) && $path_params[1] === 'dividir-gastos') {
                     actualizarDividirGastosAhora($conn, (int)$path_params[0], $data_input, $usuario_id_autenticado);
-                } else {
+                } 
+                // PUT /eventos/{id} con solo dividir_gastos_ahora (actualización parcial)
+                elseif (isset($data_input['dividir_gastos_ahora']) && !isset($data_input['nombre'])) {
+                    actualizarDividirGastosAhora($conn, (int)$path_params[0], $data_input, $usuario_id_autenticado);
+                }
+                else {
                     actualizarEvento($conn, (int)$path_params[0], $data_input, $usuario_id_autenticado);
                 }
             } else {
